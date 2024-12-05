@@ -123,7 +123,7 @@ function getLinearEquationRoot(a, b) {
 function getAngleBetweenVectors(x1, y1, x2, y2) {
   return Math.acos(
     (x1 * x2 + y1 * y2) /
-      (Math.sqrt(x1 ** 2 + x2 ** 2) * Math.sqrt(y1 ** 2 + y2 ** 2))
+      (Math.sqrt(x1 ** 2 + y1 ** 2) * Math.sqrt(x2 ** 2 + y2 ** 2))
   );
 }
 
@@ -141,9 +141,7 @@ function getAngleBetweenVectors(x1, y1, x2, y2) {
  *     0     => 0
  */
 function getLastDigit(value) {
-  const str = value * '';
-  const lastDigit = str.slice(-1);
-  return parseInt(lastDigit, 10);
+  return Math.abs(value % 10);
 }
 
 /**
@@ -218,7 +216,14 @@ function roundToPowerOfTen(num, pow) {
  *   17 => true
  */
 function isPrime(n) {
-  return n % 2 !== 0;
+  if (n <= 1) return false;
+  if (n === 2) return true;
+  if (n % 2 === 0) return false;
+  const limit = Math.sqrt(n);
+  for (let i = 3; i <= limit; i += 2) {
+    if (n % i === 0) return false;
+  }
+  return true;
 }
 
 /**
@@ -316,7 +321,7 @@ function getSumToN(n) {
  *   5   => 5  // 5
  */
 function getSumOfDigits(num) {
-  const str = num * '';
+  const str = num.toString();
   let result = 0;
   for (let i = 0; i < str.length; i += 1) {
     result += Number(str[i]);
